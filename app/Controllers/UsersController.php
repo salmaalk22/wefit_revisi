@@ -8,9 +8,11 @@ use App\Models\UserModel;
 
 class UsersController extends BaseController
 {
+    protected $userModel;
+
     public function __construct()
     {
-        // $this->userModel = new UserModel();
+        $this->userModel = new UserModel();
     }
 
     /**
@@ -21,8 +23,17 @@ class UsersController extends BaseController
     public function index()
     {
         $model = new UserModel();
+        $request = \Config\Services::request();
+        $params = $request->getGet();
+        $search = $params['search'] ?? '';
 
-        $data['users'] = $model->findAll();
+        if ($search == '') {
+            $data['users'] = $model->findAll();
+        } else {
+            $data['users'] = $model->like('name', $search)->orLike('username', $search)->findAll();
+        }
+
+        $data['search'] = $search;
 
         echo view('view_users', $data);
     }
@@ -115,5 +126,14 @@ class UsersController extends BaseController
 
         $model->delete($id);
         return redirect()->to('/admin/users');
+    }
+
+    public function searchUsers()
+    {
+        $searchInput = $this->request->getPost('searchInput');
+
+        $users = $this->userModel->searchUsers($searchInput);
+
+        return view('admin/users/index', ['users' => $users]);
     }
 }

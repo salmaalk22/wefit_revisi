@@ -2,6 +2,12 @@
 <?= $this->section('content') ?>
 <div class="container py-5">
     <h3 class="mb-3">Tambah Exercise</h3>
+    <?php $session = session(); ?>
+    <?php if ($session->getFlashKeys('error')) : ?>
+        <div class="alert alert-danger">
+            <?= $session->getFlashdata('error') ?>
+        </div>
+    <?php endif; ?>
     <form action="/admin/exercise" method="post">
         <div class="mb-3">
             <label for="name" class="form-label">Nama</label>

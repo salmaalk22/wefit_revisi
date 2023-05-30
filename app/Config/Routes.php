@@ -37,6 +37,8 @@ $routes->get('logout', 'Home::logout');
 
 $routes->group('', ['filter' => 'authAdminMiddleware'], function ($routes) {
 
+  
+    $routes->post('/admin/users/search', 'Admin/UsersController::searchUsers');
     $routes->get('/admin/users', 'UsersController::index');
     $routes->get('/admin/users/tambah', 'UsersController::new');
     $routes->post('/admin/users', 'UsersController::create');

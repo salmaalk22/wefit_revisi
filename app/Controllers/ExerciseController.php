@@ -54,10 +54,19 @@ class ExerciseController extends BaseController
     public function create()
     {
         $model = new ExerciseModel();
+        $validateVideo = 'https://drive.google.com/uc?export=download&id=';
+        $video = (string) $this->request->getPost('video');
+
+        if (!str_contains($video, $validateVideo)) {
+            echo $video;
+            $session = session();
+            $session->setFlashdata('error', 'url video is not valid, please make sure the link from google drive');
+            return redirect()->back();
+        }
 
         $payload = [
             "name" => $this->request->getPost('name'),
-            "video" => $this->request->getPost('video'),
+            "video" => $video,
             "type" => $this->request->getPost('type'),
         ];
 
@@ -90,10 +99,19 @@ class ExerciseController extends BaseController
     {
         $model = new ExerciseModel();
 
+        $validateVideo = 'https://drive.google.com/uc?export=download&id=';
+        $video = (string) $this->request->getPost('video');
+
+        if (!str_contains($video, $validateVideo)) {
+            echo $video;
+            $session = session();
+            $session->setFlashdata('error', 'url video is not valid, please make sure the link from google drive');
+            return redirect()->back();
+        }
 
         $payload = [
             "name" => $this->request->getPost('name'),
-            "video" => $this->request->getPost('video'),
+            "video" => $video,
             "type" => $this->request->getPost('type'),
         ];
 

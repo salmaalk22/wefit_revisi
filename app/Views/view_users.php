@@ -2,6 +2,16 @@
 <?= $this->section('content') ?>
 <div class="container mt-5">
     <div class="row mb-4">
+        <div class="col-4 mb-4">
+            <form action="<?= base_url('admin/users') ?>" method="get">
+                <div class="input-group">
+                    <input value="<?= $search ?>" type="text" name="search" class="form-control" placeholder="Search...">
+                    <div class="input-group-append">
+                        <button class="btn btn-dark" type="submit">Search</button>
+                    </div>
+                </div>
+            </form>
+        </div>
         <div class="col-12">
             <div class="d-flex justify-content-between">
                 <h5 class="mb-4">Lists Users</h5>

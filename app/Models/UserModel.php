@@ -6,6 +6,17 @@ use CodeIgniter\Model;
 
 class UserModel extends Model
 {
+    public function searchUsers($searchInput)
+    {
+        $builder = $this->builder();
+
+        $builder->like('name', $searchInput)
+                ->orLike('username', $searchInput)
+                ->orLike('role', $searchInput);
+
+        return $builder->get()->getResultArray();
+    }
+
     protected $DBGroup          = 'default';
     protected $table            = 'users';
     protected $primaryKey       = 'id';
@@ -13,7 +24,7 @@ class UserModel extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ["name","username","password","role"];
+    protected $allowedFields    = ["name", "username", "password", "role"];
 
     // Dates
     protected $useTimestamps = false;
